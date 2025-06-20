@@ -1,7 +1,11 @@
-[gd_scene load_steps=37 format=3 uid="uid://dhk23i13m12qp"]
+[gd_scene load_steps=41 format=3 uid="uid://dhk23i13m12qp"]
 
 [ext_resource type="Texture2D" uid="uid://bsr23k0bqt638" path="res://Player/Torch_Red.png" id="1_5vpnm"]
-[ext_resource type="Script" path="res://Player/player.gd" id="1_m60kk"]
+[ext_resource type="Script" uid="uid://dc7k66sfxr4cg" path="res://Player/player.gd" id="1_m60kk"]
+[ext_resource type="Script" uid="uid://lowx5q5r2kwk" path="res://Player/state_machine.gd" id="3_btcbx"]
+[ext_resource type="Script" uid="uid://ke06xjus6l0v" path="res://States/idlestate.gd" id="4_fhl08"]
+[ext_resource type="Script" uid="uid://kxc3vd6fs2j3" path="res://States/runstate.gd" id="5_vtle1"]
+[ext_resource type="Script" uid="uid://ci8pyjavagmgk" path="res://States/attackstate.gd" id="6_od3ui"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6nogq"]
 atlas = ExtResource("1_5vpnm")
@@ -152,7 +156,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_h7gfl")
 }],
-"loop": true,
+"loop": false,
 "name": &"attack_down",
 "speed": 10.0
 }, {
@@ -201,9 +205,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_tcbxk")
 }],
-"loop": true,
+"loop": false,
 "name": &"attack_up",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -264,9 +268,21 @@ script = ExtResource("1_m60kk")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_3h8w6")
-animation = &"attack_side"
+animation = &"attack_up"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, 30)
 rotation = 1.55509
 shape = SubResource("CapsuleShape2D_35sgj")
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("3_btcbx")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("4_fhl08")
+
+[node name="Run" type="Node" parent="StateMachine"]
+script = ExtResource("5_vtle1")
+
+[node name="Attack" type="Node" parent="StateMachine"]
+script = ExtResource("6_od3ui")
