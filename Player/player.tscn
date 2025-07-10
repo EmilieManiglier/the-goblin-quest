@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://dhk23i13m12qp"]
+[gd_scene load_steps=43 format=3 uid="uid://dhk23i13m12qp"]
 
 [ext_resource type="Texture2D" uid="uid://bsr23k0bqt638" path="res://Player/Torch_Red.png" id="1_5vpnm"]
 [ext_resource type="Script" uid="uid://dc7k66sfxr4cg" path="res://Player/player.gd" id="1_m60kk"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://ke06xjus6l0v" path="res://States/idlestate.gd" id="4_fhl08"]
 [ext_resource type="Script" uid="uid://kxc3vd6fs2j3" path="res://States/runstate.gd" id="5_vtle1"]
 [ext_resource type="Script" uid="uid://ci8pyjavagmgk" path="res://States/attackstate.gd" id="6_od3ui"]
+[ext_resource type="Script" uid="uid://su5fxiieyiaa" path="res://GeneralNodes/HurtBox/hurt_box.gd" id="7_vtle1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6nogq"]
 atlas = ExtResource("1_5vpnm")
@@ -263,15 +264,20 @@ animations = [{
 radius = 5.99926
 height = 39.9951
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_od3ui"]
+radius = 36.7696
+
 [node name="Player" type="CharacterBody2D"]
+y_sort_enabled = true
+collision_mask = 2
 script = ExtResource("1_m60kk")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_3h8w6")
-animation = &"attack_up"
+animation = &"attack_down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1, 30)
+position = Vector2(-1, 30)
 rotation = 1.55509
 shape = SubResource("CapsuleShape2D_35sgj")
 
@@ -286,3 +292,18 @@ script = ExtResource("5_vtle1")
 
 [node name="Attack" type="Node" parent="StateMachine"]
 script = ExtResource("6_od3ui")
+
+[node name="Interactions" type="Node2D" parent="."]
+
+[node name="HurtBox" type="Area2D" parent="Interactions"]
+collision_layer = 0
+collision_mask = 256
+monitoring = false
+monitorable = false
+script = ExtResource("7_vtle1")
+metadata/_custom_type_script = "uid://su5fxiieyiaa"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactions/HurtBox"]
+position = Vector2(-1, 35)
+shape = SubResource("CircleShape2D_od3ui")
+debug_color = Color(0.801309, 0, 0.188729, 0.419608)
