@@ -1,28 +1,86 @@
-[gd_scene load_steps=5 format=3 uid="uid://k6v2ig2xtqjl"]
+[gd_scene load_steps=13 format=3 uid="uid://k6v2ig2xtqjl"]
 
-[ext_resource type="Texture2D" uid="uid://bm6ini6v6oyri" path="res://props/Sprites/icon.svg" id="1_mtw27"]
 [ext_resource type="Script" uid="uid://b41ta6b2oii2s" path="res://props/Test/test.gd" id="1_qicmo"]
 [ext_resource type="PackedScene" uid="uid://cvjcprh5tbr05" path="res://GeneralNodes/Hitbox/hit_box.tscn" id="2_qicmo"]
+[ext_resource type="Texture2D" uid="uid://cwp488awhhfuf" path="res://props/Sprites/Warrior_Blue.png" id="2_x1b0i"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_x1b0i"]
-size = Vector2(128, 128)
+[sub_resource type="AtlasTexture" id="AtlasTexture_1mj06"]
+atlas = ExtResource("2_x1b0i")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mubxl"]
+atlas = ExtResource("2_x1b0i")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wlknj"]
+atlas = ExtResource("2_x1b0i")
+region = Rect2(384, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kt83o"]
+atlas = ExtResource("2_x1b0i")
+region = Rect2(576, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7vuri"]
+atlas = ExtResource("2_x1b0i")
+region = Rect2(768, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mqs1b"]
+atlas = ExtResource("2_x1b0i")
+region = Rect2(960, 0, 192, 192)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8fg1u"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1mj06")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mubxl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wlknj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kt83o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7vuri")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mqs1b")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qicmo"]
+radius = 29.0
+height = 78.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_x1b0i"]
+radius = 29.0
+height = 78.0
 
 [node name="Test" type="Node2D"]
 script = ExtResource("1_qicmo")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-z_as_relative = false
-texture = ExtResource("1_mtw27")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_8fg1u")
+autoplay = "default"
+frame_progress = 0.851985
 
 [node name="HitBox" parent="." instance=ExtResource("2_qicmo")]
 collision_layer = 258
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
-shape = SubResource("RectangleShape2D_x1b0i")
+position = Vector2(0, 1)
+shape = SubResource("CapsuleShape2D_qicmo")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 collision_layer = 2
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-shape = SubResource("RectangleShape2D_x1b0i")
+position = Vector2(0, 1)
+shape = SubResource("CapsuleShape2D_x1b0i")
